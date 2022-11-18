@@ -36,26 +36,27 @@ def Ledoff():
 def main():
     while True:
         GPIO.setmode(GPIO.BOARD)
-
         # Forward
         GPIO.output(IN1, GPIO.HIGH)
         GPIO.output(IN2, GPIO.LOW)
         # time.sleep(20)
         x = input('Enter the x value')
 
-        if x != 'person':
-            pass
-        else:
-            print(pyfiglet.figlet_format('H U M A N'))
-            GPIO.output(ENA, GPIO.LOW)
-            GPIO.output(IN1, GPIO.LOW)
-            GPIO.output(IN2, GPIO.LOW)
-            Ledon()
-            print('we have detected a human in the vision and \nfor safety purpose we have slow stopped the vehicle')
-            Ledoff()
-            GPIO.cleanup()
-            setup()
-        
+        with open('data.txt','rt') as f:
+            classes = f.read().rstrip('\n').split('\n')
+            for variable in classes:
+                if variable != 'person':
+                    pass
+                else:
+                    print(pyfiglet.figlet_format('H U M A N'))
+                    GPIO.output(ENA, GPIO.LOW)
+                    GPIO.output(IN1, GPIO.LOW)
+                    GPIO.output(IN2, GPIO.LOW)
+                    Ledon()
+                    print('we have detected a human in the vision and \nfor safety purpose we have stopped the vehicle')
+                    Ledoff()
+                    GPIO.cleanup()
+                    setup()
 
 if __name__ == '__main__':
     setup()
