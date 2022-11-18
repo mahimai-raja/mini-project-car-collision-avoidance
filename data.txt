@@ -1,0 +1,4 @@
+clock
+bike 
+person
+car
